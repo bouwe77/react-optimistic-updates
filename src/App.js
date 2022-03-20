@@ -6,24 +6,30 @@ export default function App() {
   const [todos, setTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [apiPostWorks, setApiPostWorks] = useState(true);
+  const [refetch, setRefetch] = useState(true);
 
   useEffect(() => {
-    console.log("useEffect...");
     setErrorMessage(null);
     getTodos()
       .then((todos) => setTodos(todos))
       .catch((errorMessage) => setErrorMessage(errorMessage));
-  }, []);
+  }, [refetch]);
 
   function handleSubmit(event) {
     event.preventDefault();
     setErrorMessage("");
     const newTodoValue = newTodoRef.current.value;
 
+    setTodos((currentTodos) => [
+      ...currentTodos,
+      { id: todos.length + 1, what: newTodoValue }
+    ]);
+
+    newTodoRef.current.value = "";
+
     addTodo(newTodoValue, apiPostWorks)
-      .then((newTodo) => {
-        setTodos((currentTodos) => [...currentTodos, newTodo]);
-        newTodoRef.current.value = "";
+      .then(() => {
+        setRefetch((prev) => !prev);
       })
       .catch((error) => setErrorMessage(error));
   }
