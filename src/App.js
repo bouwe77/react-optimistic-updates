@@ -20,6 +20,8 @@ export default function App() {
     setErrorMessage("");
     const newTodoValue = newTodoRef.current.value;
 
+    const prevTodos = todos;
+
     setTodos((currentTodos) => [
       ...currentTodos,
       { id: todos.length + 1, what: newTodoValue }
@@ -31,7 +33,10 @@ export default function App() {
       .then(() => {
         setRefetch((prev) => !prev);
       })
-      .catch((error) => setErrorMessage(error));
+      .catch((error) => {
+        setTodos(prevTodos);
+        setErrorMessage(error);
+      });
   }
 
   return (
