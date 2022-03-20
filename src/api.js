@@ -3,7 +3,7 @@ const todos = [
   { id: 2, what: "Dishes" }
 ];
 
-const getTodos = (willSucceed) => {
+const getTodos = (willSucceed = true) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (willSucceed) resolve(todos);
@@ -12,7 +12,7 @@ const getTodos = (willSucceed) => {
   });
 };
 
-const addTodo = (what, willSucceed) => {
+const addTodo = (what, willSucceed = true) => {
   const newTodo = { id: todos.length + 1, what };
 
   return new Promise((resolve, reject) => {

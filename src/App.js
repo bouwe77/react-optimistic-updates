@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { addTodo, getTodos } from "./api";
 
+const initialApiStatus = { get: true, post: true };
+
 export default function App() {
   const newTodoRef = useRef();
   const [todos, setTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [apiStatus, setApiStatus] = useState({ get: true, post: true });
+  const [apiStatus, setApiStatus] = useState(initialApiStatus);
 
   useEffect(() => {
     console.log("render...");
